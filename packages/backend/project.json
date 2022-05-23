@@ -45,6 +45,16 @@
         "jestConfig": "packages/backend/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "test:e2e": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/packages/backend"
+      ],
+      "options": {
+        "jestConfig": "packages/backend/jest-e2e.config.ts",
+        "passWithNoTests": true
+      }
     }
   },
   "tags": []
