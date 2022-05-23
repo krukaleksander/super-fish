@@ -21,7 +21,7 @@ describe('AppService', () => {
   });
 
   describe('fish endpoint', () => {
-    it('\'/api (GET) response status 200\'', () => {
+    it('\'/fish (GET) response status 200\'', () => {
      return request(app.getHttpServer())
        .get('/fish')
        .expect(200)
