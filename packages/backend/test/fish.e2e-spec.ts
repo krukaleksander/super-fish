@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import {INestApplication, ValidationPipe} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import {FishModule} from "../src/fish/fish.module";
 import * as request from "supertest";
@@ -13,6 +13,7 @@ describe('AppService', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(new ValidationPipe())
     await app.init();
   });
 
