@@ -27,5 +27,10 @@ describe('AppService', () => {
        .get('/fish')
        .expect(200)
     });
+    it('\'/fish (POST) response status 400 if no fish was send', () => {
+      return request(app.getHttpServer())
+        .post('/fish')
+        .expect(400)
+    })
   });
 });

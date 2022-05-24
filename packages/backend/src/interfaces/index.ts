@@ -1,4 +1,4 @@
-interface IFish {
+export interface IFish {
   id?: number,
   frontSide: string,
   backSide: string,
@@ -7,7 +7,7 @@ interface IFish {
   refreshedAt: string
 }
 
-interface IFishPackage {
+export interface IFishPackage {
   id?: number,
   name: string,
   shoalOfFish?: IFish[]

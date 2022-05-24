@@ -1,7 +1,8 @@
 import {IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested} from "class-validator";
 import {Type} from "class-transformer";
+import {IFish, IFishPackage} from "../src/interfaces";
 
-class FishDto implements IFish {
+export class FishDto implements IFish {
   @IsOptional()
   @IsNumber()
   id?: number;
@@ -22,7 +23,7 @@ class FishDto implements IFish {
   refreshedAt: string;
 }
 
-class FishPackageDto implements IFishPackage {
+export class FishPackageDto implements IFishPackage {
   @IsOptional()
   @IsNumber()
   id?: number;
