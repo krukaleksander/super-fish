@@ -32,5 +32,29 @@ describe('AppService', () => {
         .post('/fish')
         .expect(400)
     })
+    it('\'/fish (POST) response status 400 if fish is sent but not valid', () => {
+      return request(app.getHttpServer())
+        .post('/fish')
+        .send({
+          frontSide: 20,
+          backSide: 'Something'
+        })
+        .expect({
+            "statusCode": 400,
+            "message": [
+              'frontSide must be a string',
+              'remember should not be empty',
+              'remember must be a boolean value',
+              'createdAt should not be empty',
+              'createdAt must be a string',
+              'refreshedAt should not be empty',
+              'refreshedAt must be a string'
+            ],
+            "error": "Bad Request"
+          }
+        )
+    })
+
   });
+
 });
