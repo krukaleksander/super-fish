@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import {FishDto} from "../../dto/fish.dto";
+import { FishDto } from '../../dto/fish.dto';
+import { IFish } from '../interfaces';
 @Injectable()
 export class FishService {
   findAll(): string {
@@ -7,6 +8,19 @@ export class FishService {
   }
 
   saveFish(fish: FishDto) {
-    return {status: 200, message: 'Fish created'}
+    const { backSide, frontSide } = fish;
+    const newSavedFish: IFish = {
+      backSide,
+      frontSide,
+      id: Math.random(),
+      remember: false,
+      refreshedAt: 'never',
+      createdAt: new Date().toString(),
+    };
+    return {
+      status: 201,
+      message: 'Fish created',
+      fish: newSavedFish,
+    };
   }
 }
