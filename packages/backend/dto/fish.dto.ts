@@ -13,14 +13,14 @@ export class FishDto implements IFish {
   @IsNotEmpty()
   backSide: string;
   @IsBoolean()
-  @IsNotEmpty()
-  remember: boolean;
+  @IsOptional()
+  remember?: boolean;
   @IsString()
-  @IsNotEmpty()
-  createdAt: string;
+  @IsOptional()
+  createdAt?: string;
   @IsString()
-  @IsNotEmpty()
-  refreshedAt: string;
+  @IsOptional()
+  refreshedAt?: string;
 }
 
 export class FishPackageDto implements IFishPackage {
