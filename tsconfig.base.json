@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@super-fish/mock-fish-lib": ["packages/mock-fish-lib/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

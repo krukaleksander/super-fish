@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "backend": "packages/backend"
+    "backend": "packages/backend",
+    "mock-fish-lib": "packages/mock-fish-lib"
   }
 }

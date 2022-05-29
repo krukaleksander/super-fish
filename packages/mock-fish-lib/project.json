@@ -1,0 +1,32 @@
+{
+  "sourceRoot": "packages/mock-fish-lib/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/mock-fish-lib",
+        "main": "packages/mock-fish-lib/src/index.ts",
+        "tsConfig": "packages/mock-fish-lib/tsconfig.lib.json",
+        "assets": ["packages/mock-fish-lib/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/mock-fish-lib/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/mock-fish-lib"],
+      "options": {
+        "jestConfig": "packages/mock-fish-lib/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
