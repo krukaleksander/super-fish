@@ -5,6 +5,7 @@ export const mockFishPackage: IFishPackage = {
   name: '6 minute english 1.0',
   shoalOfFish: [
     {
+      packageID: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
       id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
       frontSide: 'hard to get your head around',
       backSide: 'difficult to fully understand or comprehend',
@@ -13,6 +14,7 @@ export const mockFishPackage: IFishPackage = {
       refreshedAt: 'never',
     },
     {
+      packageID: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
       id: 'b197f765-57cd-4368-8751-cde181e6bfdf',
       frontSide: 'thin on the ground',
       backSide: 'there are very few of something',
