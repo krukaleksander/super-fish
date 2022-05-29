@@ -22,7 +22,7 @@ describe('Fish', () => {
   });
 
   describe('fish endpoint', () => {
-    describe("'/fish (GET) one fish endpoint'", () => {
+    describe("/fish (GET) all fishes endpoint", () => {
       it("'/fish (GET) response status 200'", () => {
         return request(app.getHttpServer()).get('/fish').expect(200);
       });
