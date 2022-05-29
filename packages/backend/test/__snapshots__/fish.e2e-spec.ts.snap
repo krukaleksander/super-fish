@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Fish fish endpoint /fish (GET) all fishes endpoint /fish (GET) should return all packages of fishes 1`] = `
+Object {
+  "packages": Array [
+    Object {
+      "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "name": "6 minute english 1.0",
+      "shoalOfFish": Array [
+        Object {
+          "backSide": "difficult to fully understand or comprehend",
+          "createdAt": "2022-05-29T06:26:16.174Z",
+          "frontSide": "hard to get your head around",
+          "id": "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+          "refreshedAt": "never",
+          "remember": false,
+        },
+        Object {
+          "backSide": "there are very few of something",
+          "createdAt": "2022-05-30T06:26:16.174Z",
+          "frontSide": "thin on the ground",
+          "id": "b197f765-57cd-4368-8751-cde181e6bfdf",
+          "refreshedAt": "never",
+          "remember": false,
+        },
+      ],
+    },
+  ],
+  "status": 200,
+}
+`;

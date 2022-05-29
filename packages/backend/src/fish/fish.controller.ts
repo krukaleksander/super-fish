@@ -1,13 +1,14 @@
 import {Body, Controller, Get, Post} from '@nestjs/common';
 import {FishService} from "./fish.service";
 import {FishDto} from "../../dto/fish.dto";
+import {ISendAllFishes} from "../interfaces";
 
 @Controller('fish')
 export class FishController {
   constructor(private readonly fishService: FishService) {
   }
   @Get()
-  findAll(): string {
+  findAll(): ISendAllFishes {
     return this.fishService.findAll();
   }
   @Post()

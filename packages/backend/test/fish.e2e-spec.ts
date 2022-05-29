@@ -22,9 +22,15 @@ describe('Fish', () => {
   });
 
   describe('fish endpoint', () => {
-    describe("/fish (GET) all fishes endpoint", () => {
+    describe('/fish (GET) all fishes endpoint', () => {
       it("'/fish (GET) response status 200'", () => {
         return request(app.getHttpServer()).get('/fish').expect(200);
+      });
+      it('/fish (GET) should return all packages of fishes', async () => {
+        const { body: response } = await request(app.getHttpServer()).get(
+          '/fish'
+        );
+        expect(response).toMatchSnapshot();
       });
     });
     describe("'/fish (POST) one fish endpoint'", () => {
@@ -62,7 +68,7 @@ describe('Fish', () => {
             id: expect.any(String),
             remember: expect.any(Boolean),
             createdAt: expect.any(String),
-            refreshedAt: expect.any(String)
+            refreshedAt: expect.any(String),
           },
         });
       });
