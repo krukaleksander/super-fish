@@ -14,8 +14,9 @@ export class FishService {
   }
 
   saveFish(fish: FishDto) {
-    const { backSide, frontSide } = fish;
+    const { backSide, frontSide, packageID } = fish;
     const newSavedFish: IFish = {
+      packageID,
       backSide,
       frontSide,
       id: generateID(),
