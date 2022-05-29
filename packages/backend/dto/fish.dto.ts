@@ -3,6 +3,9 @@ import {Type} from "class-transformer";
 import {IFish, IFishPackage} from "../src/interfaces";
 
 export class FishDto implements IFish {
+  @IsNotEmpty()
+  @IsString()
+  packageID: string;
   @IsOptional()
   @IsNumber()
   id?: string;

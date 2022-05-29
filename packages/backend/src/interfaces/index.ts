@@ -1,4 +1,5 @@
 export interface IFish {
+  packageID: string,
   id?: string,
   frontSide: string,
   backSide: string,
