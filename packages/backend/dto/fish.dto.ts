@@ -26,7 +26,7 @@ export class FishDto implements IFish {
 export class FishPackageDto implements IFishPackage {
   @IsOptional()
   @IsNumber()
-  id?: number;
+  id?: string;
   @IsString()
   @IsNotEmpty()
   name: string;

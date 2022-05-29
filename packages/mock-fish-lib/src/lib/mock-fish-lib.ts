@@ -1,3 +1,3 @@
-export function mockFishLib(): string {
-  return 'mock-fish-lib';
-}
+import {IFishPackage} from "../../../backend/src/interfaces";
+
+export const fishPackage: IFishPackage[] = []

@@ -8,7 +8,7 @@ export interface IFish {
 }
 
 export interface IFishPackage {
-  id?: number,
+  id?: string,
   name: string,
   shoalOfFish?: IFish[]
 }
