@@ -1,5 +1,5 @@
 export interface IFish {
-  id?: number,
+  id?: string,
   frontSide: string,
   backSide: string,
   remember?: boolean,

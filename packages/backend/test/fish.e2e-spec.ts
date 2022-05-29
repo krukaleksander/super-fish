@@ -59,7 +59,7 @@ describe('Fish', () => {
           fish: {
             frontSide: mockFish.frontSide,
             backSide: mockFish.backSide,
-            id: expect.any(Number),
+            id: expect.any(String),
             remember: expect.any(Boolean),
             createdAt: expect.any(String),
             refreshedAt: expect.any(String)

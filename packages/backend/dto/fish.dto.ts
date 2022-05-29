@@ -5,7 +5,7 @@ import {IFish, IFishPackage} from "../src/interfaces";
 export class FishDto implements IFish {
   @IsOptional()
   @IsNumber()
-  id?: number;
+  id?: string;
   @IsString()
   @IsNotEmpty()
   frontSide: string;

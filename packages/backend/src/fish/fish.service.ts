@@ -12,7 +12,7 @@ export class FishService {
     const newSavedFish: IFish = {
       backSide,
       frontSide,
-      id: Math.random(),
+      id: Math.random().toString(),
       remember: false,
       refreshedAt: 'never',
       createdAt: new Date().toString(),
