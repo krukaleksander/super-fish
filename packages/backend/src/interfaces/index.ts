@@ -12,3 +12,8 @@ export interface IFishPackage {
   name: string,
   shoalOfFish?: IFish[]
 }
+
+export interface ISendAllFishes {
+  status: number,
+  packages: IFishPackage[]
+}
