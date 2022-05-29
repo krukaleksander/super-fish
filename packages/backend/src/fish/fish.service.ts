@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FishDto } from '../../dto/fish.dto';
 import { IFish } from '../interfaces';
+import {v4 as generateID} from 'uuid';
 @Injectable()
 export class FishService {
   findAll(): string {
@@ -12,7 +13,7 @@ export class FishService {
     const newSavedFish: IFish = {
       backSide,
       frontSide,
-      id: Math.random().toString(),
+      id: generateID(),
       remember: false,
       refreshedAt: 'never',
       createdAt: new Date().toString(),
