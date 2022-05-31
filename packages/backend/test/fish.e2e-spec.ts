@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { FishModule } from '../src/fish/fish.module';
 import * as request from 'supertest';
 import { FishDto } from '../dto/fish.dto';
-
+import {mockFishPackage} from "@super-fish/mock-fish-lib";
 describe('Fish', () => {
   let app: INestApplication;
 
@@ -55,7 +55,7 @@ describe('Fish', () => {
         const mockFish: FishDto = {
           backSide: 'Kot',
           frontSide: 'Cat',
-          packageID: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
+          packageID: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
         };
         const response = await request(app.getHttpServer())
           .post('/fish')
@@ -80,50 +80,65 @@ describe('Fish', () => {
         const packageName = '6 minute english 1.2';
         const response = await request(app.getHttpServer())
           .post('/fish/package')
-          .send({name: packageName})
-        expect(response.status).toBe(201)
+          .send({ name: packageName });
+        expect(response.status).toBe(201);
         expect(response.body).toMatchObject({
           status: 201,
           message: 'Package Created',
           package: {
             id: expect.any(String),
             name: packageName,
-            shoalOfFish: []
-          }
-        })
+            shoalOfFish: [],
+          },
+        });
       });
       it('should send 400 if package name is not a string', async () => {
         const response = await request(app.getHttpServer())
           .post('/fish/package')
-          .send({name: [1,null, undefined]})
-        expect(response.status).toBe(400)
+          .send({ name: [1, null, undefined] });
+        expect(response.status).toBe(400);
       });
       it('should send 400 if package name is too long', async () => {
         const response = await request(app.getHttpServer())
           .post('/fish/package')
-          .send({name: 'I\'am writing too long package name =)'})
-        expect(response.status).toBe(400)
+          .send({ name: "I'am writing too long package name =)" });
+        expect(response.status).toBe(400);
       });
-    })
+    });
     describe('delete fish endpoint', () => {
       it('should delete fish if passed id is valid and can be found in db', async () => {
         const response = await request(app.getHttpServer())
           .delete('/fish')
-          .send({id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'})
-        expect(response.status).toBe(202)
+          .send({ id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed' });
+        expect(response.status).toBe(202);
       });
       it('should send 400 if id is not valid', async () => {
         const response = await request(app.getHttpServer())
           .delete('/fish')
-          .send({id: true})
-        expect(response.status).toBe(400)
+          .send({ id: true });
+        expect(response.status).toBe(400);
       });
       it('should send 204 (No Content) if there is no fish with passed id in db', async () => {
         const response = await request(app.getHttpServer())
           .delete('/fish')
-          .send({id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bba'})
-        expect(response.status).toBe(204)
+          .send({ id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bba' });
+        expect(response.status).toBe(204);
       });
-    })
+    });
+    describe('(PUT) / fish update fish endpoint', () => {
+      it('should update existing fish', async () => {
+        const {shoalOfFish} = mockFishPackage;
+        const fishToUpdate = shoalOfFish[0];
+        const modifiedFish = {
+          ...fishToUpdate,
+          remember: true
+        }
+        const response = await request(app.getHttpServer())
+          .put('/fish')
+          .send(modifiedFish);
+        expect(response.body).toEqual({"message": "Fish updated"})
+        expect(response.status).toBe(200)
+      });
+    });
   });
 });

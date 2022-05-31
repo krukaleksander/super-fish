@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, HttpCode, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Post, Put} from '@nestjs/common';
 import {FishService} from "./fish.service";
 import {FishDto, idOfDeletingItemDto, nameOfNewPackageDto} from "../../dto/fish.dto";
 import {ISendAllFishes} from "../interfaces";
@@ -23,5 +23,9 @@ export class FishController {
   @HttpCode(202)
   deleteFish(@Body() fishId: idOfDeletingItemDto) {
     return this.fishService.deleteFish(fishId)
+  }
+  @Put()
+  updateFish(@Body() fishToUpdate: FishDto) {
+    return this.fishService.updateFish(fishToUpdate)
   }
 }
