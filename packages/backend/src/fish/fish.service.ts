@@ -13,7 +13,7 @@ export class FishService {
     };
   }
 
-  saveFish(fish: FishDto) {
+  createFish(fish: FishDto) {
     const { backSide, frontSide, packageID } = fish;
     const newSavedFish: IFish = {
       packageID,
