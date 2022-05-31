@@ -112,6 +112,12 @@ describe('Fish', () => {
           .send({id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'})
         expect(response.status).toBe(202)
       });
+      it('should send 400 if id is not valid', async () => {
+        const response = await request(app.getHttpServer())
+          .delete('/fish')
+          .send({id: true})
+        expect(response.status).toBe(400)
+      });
     })
   });
 });
