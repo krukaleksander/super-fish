@@ -7,7 +7,7 @@ export class FishDto implements IFish {
   @IsString()
   packageID: string;
   @IsOptional()
-  @IsNumber()
+  @IsString()
   id?: string;
   @IsString()
   @IsNotEmpty()
