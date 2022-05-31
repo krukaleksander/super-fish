@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { FishModule } from '../src/fish/fish.module';
 import * as request from 'supertest';
 import { FishDto } from '../dto/fish.dto';
-import {mockFishPackage} from "@super-fish/mock-fish-lib";
+import { mockFishPackage } from '@super-fish/mock-fish-lib';
 describe('Fish', () => {
   let app: INestApplication;
 
@@ -126,18 +126,28 @@ describe('Fish', () => {
       });
     });
     describe('(PUT) / fish update fish endpoint', () => {
+      const { shoalOfFish } = mockFishPackage;
+      const fishToUpdate = shoalOfFish[0];
       it('should update existing fish', async () => {
-        const {shoalOfFish} = mockFishPackage;
-        const fishToUpdate = shoalOfFish[0];
         const modifiedFish = {
           ...fishToUpdate,
-          remember: true
-        }
+          remember: true,
+        };
         const response = await request(app.getHttpServer())
           .put('/fish')
           .send(modifiedFish);
-        expect(response.body).toEqual({"message": "Fish updated"})
-        expect(response.status).toBe(200)
+        expect(response.body).toEqual({ message: 'Fish updated' });
+        expect(response.status).toBe(200);
+      });
+      it('should send 204 (No Content) if there is no fish with passed id in db or if user is trying to change fish id', async () => {
+        const modifiedFish = {
+          ...fishToUpdate,
+          id: 'aaaa-xxxx-zzzz-ddddddd'
+        };
+        const response = await request(app.getHttpServer())
+          .put('/fish')
+          .send(modifiedFish);
+        expect(response.status).toBe(204);
       });
     });
   });
