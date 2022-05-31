@@ -33,7 +33,7 @@ describe('Fish', () => {
         expect(response).toMatchSnapshot();
       });
     });
-    describe("'/fish (POST) one fish endpoint'", () => {
+    describe("'/fish (POST) create one fish endpoint'", () => {
       it("'/fish (POST) response status 400 if no fish was send", () => {
         return request(app.getHttpServer()).post('/fish').expect(400);
       });
