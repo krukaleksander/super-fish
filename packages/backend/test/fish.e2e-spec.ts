@@ -118,6 +118,12 @@ describe('Fish', () => {
           .send({id: true})
         expect(response.status).toBe(400)
       });
+      it('should send 204 (No Content) if there is no fish with passed id in db', async () => {
+        const response = await request(app.getHttpServer())
+          .delete('/fish')
+          .send({id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bba'})
+        expect(response.status).toBe(204)
+      });
     })
   });
 });
