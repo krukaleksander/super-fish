@@ -92,6 +92,18 @@ describe('Fish', () => {
           }
         })
       });
+      it('should send 400 if package name is not a string', async () => {
+        const response = await request(app.getHttpServer())
+          .post('/fish/package')
+          .send({name: [1,null, undefined]})
+        expect(response.status).toBe(400)
+      });
+      it('should send 400 if package name is too long', async () => {
+        const response = await request(app.getHttpServer())
+          .post('/fish/package')
+          .send({name: 'I\'am writing too long package name =)'})
+        expect(response.status).toBe(400)
+      });
     })
   });
 });

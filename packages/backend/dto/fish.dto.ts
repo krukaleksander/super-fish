@@ -1,4 +1,4 @@
-import {IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested} from "class-validator";
+import {IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, ValidateNested} from "class-validator";
 import {Type} from "class-transformer";
 import {IFish, IFishPackage} from "../src/interfaces";
 
@@ -37,4 +37,11 @@ export class FishPackageDto implements IFishPackage {
   @ValidateNested({each: true})
   @Type(() => FishDto)
   shoalOfFish?: FishDto[];
+}
+
+export class nameOfNewPackageDto {
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(20, {message: 'Package name is too long'})
+  name: string;
 }

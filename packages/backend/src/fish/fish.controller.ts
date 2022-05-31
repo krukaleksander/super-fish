@@ -1,6 +1,6 @@
 import {Body, Controller, Get, Post} from '@nestjs/common';
 import {FishService} from "./fish.service";
-import {FishDto} from "../../dto/fish.dto";
+import {FishDto, nameOfNewPackageDto} from "../../dto/fish.dto";
 import {ISendAllFishes} from "../interfaces";
 
 @Controller('fish')
@@ -16,7 +16,7 @@ export class FishController {
     return this.fishService.saveFish(fish);
   }
   @Post('/package')
-  createPackage(@Body() packageName) {
+  createPackage(@Body() packageName: nameOfNewPackageDto) {
     return this.fishService.createPackage(packageName);
   }
 }
