@@ -15,4 +15,8 @@ export class FishController {
   saveFish(@Body() fish: FishDto) {
     return this.fishService.saveFish(fish);
   }
+  @Post('/package')
+  createPackage(@Body() packageName) {
+    return this.fishService.createPackage(packageName);
+  }
 }

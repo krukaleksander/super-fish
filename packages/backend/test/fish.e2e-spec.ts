@@ -75,5 +75,23 @@ describe('Fish', () => {
         });
       });
     });
+    describe('create package endpoint', () => {
+      it('should create package and send back details of it', async () => {
+        const packageName = '6 minute english 1.2';
+        const response = await request(app.getHttpServer())
+          .post('/fish/package')
+          .send({name: packageName})
+        expect(response.status).toBe(201)
+        expect(response.body).toMatchObject({
+          status: 201,
+          message: 'Package Created',
+          package: {
+            id: expect.any(String),
+            name: packageName,
+            shoalOfFish: []
+          }
+        })
+      });
+    })
   });
 });

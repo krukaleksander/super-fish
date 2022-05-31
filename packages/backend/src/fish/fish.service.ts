@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FishDto } from '../../dto/fish.dto';
+import {FishDto, FishPackageDto} from '../../dto/fish.dto';
 import { IFish, ISendAllFishes } from '../interfaces';
 import { v4 as generateID } from 'uuid';
 import { mockFishPackage } from '@super-fish/mock-fish-lib';
@@ -29,5 +29,18 @@ export class FishService {
       message: 'Fish created',
       fish: newSavedFish,
     };
+  }
+
+  createPackage(packageName) {
+    const newPackage: FishPackageDto = {
+      id: generateID(),
+      name: packageName.name,
+      shoalOfFish: []
+    }
+    return {
+      status: 201,
+      message: 'Package Created',
+      package: newPackage
+    }
   }
 }
