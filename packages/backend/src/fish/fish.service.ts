@@ -45,7 +45,8 @@ export class FishService {
   }
 
   deleteFish(fishId: idOfDeletingItemDto) {
-    const isFishInDB = mockFishPackage.shoalOfFish.findIndex(fish => fish.id = fishId.id) > -1
+    const isFishInDB = mockFishPackage.shoalOfFish.findIndex(fish => fish.id === fishId.id) > -1
+    console.log(`is fish?: ${isFishInDB}`)
     if(isFishInDB) return {message: 'Fish deleted'}
     throw new HttpException('No Content', HttpStatus.NO_CONTENT);
   }
