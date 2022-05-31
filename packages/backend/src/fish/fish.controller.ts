@@ -1,6 +1,6 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Post} from '@nestjs/common';
 import {FishService} from "./fish.service";
-import {FishDto, nameOfNewPackageDto} from "../../dto/fish.dto";
+import {FishDto, idOfDeletingItemDto, nameOfNewPackageDto} from "../../dto/fish.dto";
 import {ISendAllFishes} from "../interfaces";
 
 @Controller('fish')
@@ -18,5 +18,10 @@ export class FishController {
   @Post('/package')
   createPackage(@Body() packageName: nameOfNewPackageDto) {
     return this.fishService.createPackage(packageName);
+  }
+  @Delete()
+  @HttpCode(202)
+  deleteFish(@Body() fishId: idOfDeletingItemDto) {
+    return this.fishService.deleteFish(fishId)
   }
 }

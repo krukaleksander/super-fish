@@ -105,5 +105,13 @@ describe('Fish', () => {
         expect(response.status).toBe(400)
       });
     })
+    describe('delete fish endpoint', () => {
+      it('should delete fish if passed id is valid and can be found in db', async () => {
+        const response = await request(app.getHttpServer())
+          .delete('/fish')
+          .send({id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'})
+        expect(response.status).toBe(202)
+      });
+    })
   });
 });
