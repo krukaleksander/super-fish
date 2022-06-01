@@ -141,9 +141,7 @@ describe('Fish', () => {
           ...fishToUpdate,
           remember: true,
         };
-        const response = await request(app.getHttpServer())
-          .put('/fish')
-          .send(modifiedFish);
+        const response = await putToServer('/fish', modifiedFish)
         expect(response.body).toEqual({ message: 'Fish updated' });
         expect(response.status).toBe(200);
       });
@@ -152,9 +150,7 @@ describe('Fish', () => {
           ...fishToUpdate,
           id: 'aaaa-xxxx-zzzz-ddddddd'
         };
-        const response = await request(app.getHttpServer())
-          .put('/fish')
-          .send(modifiedFish);
+        const response = await putToServer('/fish', modifiedFish)
         expect(response.status).toBe(204);
       });
     });
