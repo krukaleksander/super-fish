@@ -8,6 +8,7 @@ describe('Fish', () => {
   let app: INestApplication;
   let putToServer: (endpoint: string, objectToSend) => Promise<any>;
   let getFromServer: (endpoint: string, objectToSend) => Promise<any>;
+  let postToServer: (endpoint: string, objectToSend) => Promise<any>;
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [FishModule],
@@ -27,6 +28,11 @@ describe('Fish', () => {
     getFromServer = async (endpoint, objectToSend) => {
       return await request(app.getHttpServer())
         .get(endpoint)
+        .send(objectToSend)
+    }
+    postToServer = async (endpoint, objectToSend) => {
+      return await request(app.getHttpServer())
+        .post(endpoint)
         .send(objectToSend)
     }
   })
