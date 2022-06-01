@@ -122,21 +122,15 @@ describe('Fish', () => {
     });
     describe("(DELETE) /fish delete fish endpoint", () => {
       it("should delete fish if passed id is valid and can be found in db", async () => {
-        const response = await request(app.getHttpServer())
-          .delete('/fish')
-          .send({ id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed' });
+        const response = await deleteFromServer(singleFishEndpoint, { id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed' })
         expect(response.status).toBe(202);
       });
       it("should send 400 if id is not valid", async () => {
-        const response = await request(app.getHttpServer())
-          .delete('/fish')
-          .send({ id: true });
+        const response = await deleteFromServer(singleFishEndpoint, { id: true })
         expect(response.status).toBe(400);
       });
       it("should send 204 (No Content) if there is no fish with passed id in db", async () => {
-        const response = await request(app.getHttpServer())
-          .delete('/fish')
-          .send({ id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bba' });
+        const response = await deleteFromServer(singleFishEndpoint, { id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bba' })
         expect(response.status).toBe(204);
       });
     });
