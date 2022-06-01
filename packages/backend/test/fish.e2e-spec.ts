@@ -171,6 +171,18 @@ describe('Fish', () => {
           .send(packageWithWrongID)
         expect(response.status).toBe(204)
       });
+      it('should throw 400 if new package name is too long', async () => {
+        const packageWithTooLongName: ModifyPackageDto = {
+          newName: "I'm sure that this name for a package is too long",
+          packageID: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"
+
+        };
+        const response = await request(app.getHttpServer())
+          .put('/fish/package')
+          .send(packageWithTooLongName);
+        expect(response.status).toBe(400)
+      });
+
     })
   });
 });
