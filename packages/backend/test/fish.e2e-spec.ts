@@ -151,15 +151,25 @@ describe('Fish', () => {
       });
     });
     describe('(PUT) /fish/package update fish package', () => {
+      const packageToRename: ModifyPackageDto = {
+        packageID: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        newName: "New Package Name"
+      }
       it('should change package name if passed id is valid', async () => {
-        const packageToRename: ModifyPackageDto = {
-          packageID: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
-          newName: "New Package Name"
-        }
         const response = await request(app.getHttpServer())
           .put('/fish/package')
           .send(packageToRename);
         expect(response.status).toBe(200)
+      });
+      it('should throw 204 if there is no package with that id', async () => {
+        const packageWithWrongID:ModifyPackageDto = {
+          packageID: 'wrong id',
+          newName: "New Name"
+        }
+        const response = await request(app.getHttpServer())
+          .put('/fish/package')
+          .send(packageWithWrongID)
+        expect(response.status).toBe(204)
       });
     })
   });
