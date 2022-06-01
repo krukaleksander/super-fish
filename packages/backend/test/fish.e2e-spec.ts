@@ -36,14 +36,15 @@ describe('Fish', () => {
   });
 
   describe('fish endpoint', () => {
+    const singleFishEndpoint = '/fish';
+    const packageEndpoint = '/fish/package';
     describe("(GET) /fish all fishes endpoint",  () => {
       it("response status 200", async () => {
-        const response = await getFromServer('/fish', {})
+        const response = await getFromServer(singleFishEndpoint, {})
         expect(response.status).toBe(200)
-        // return request(app.getHttpServer()).get('/fish').expect(200);
       });
       it("should return all packages of fishes", async () => {
-        const response = await getFromServer('/fish', {})
+        const response = await getFromServer(singleFishEndpoint, {})
         expect(response.body).toMatchSnapshot();
       });
     });
@@ -166,7 +167,7 @@ describe('Fish', () => {
         newName: "New Package Name"
       }
       it("should change package name if passed id is valid", async () => {
-        const response = await putToServer('/fish/package', packageToRename)
+        const response = await putToServer(packageEndpoint, packageToRename)
         expect(response.status).toBe(200)
       });
       it("should throw 204 if there is no package with that id", async () => {
@@ -174,7 +175,7 @@ describe('Fish', () => {
           packageID: 'wrong id',
           newName: "New Name"
         }
-        const response = await putToServer('/fish/package', packageWithWrongID)
+        const response = await putToServer(packageEndpoint, packageWithWrongID)
         expect(response.status).toBe(204)
       });
       it("should throw 400 if new package name is too long", async () => {
@@ -183,7 +184,7 @@ describe('Fish', () => {
           packageID: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"
 
         };
-        const response = await putToServer('/fish/package', packageWithTooLongName)
+        const response = await putToServer(packageEndpoint, packageWithTooLongName)
         expect(response.status).toBe(400)
       });
 
