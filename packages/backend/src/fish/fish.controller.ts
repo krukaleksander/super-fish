@@ -7,26 +7,26 @@ import {ISendAllFishes} from "../interfaces";
 export class FishController {
   constructor(private readonly fishService: FishService) {
   }
-  @Get('/package')
-  sendAllPackages(): ISendAllFishes {
-    return this.fishService.sendAllPackages();
-  }
   @Post()
   createFish(@Body() fish: FishDto) {
     return this.fishService.createFish(fish);
   }
-  @Post('/package')
-  createPackage(@Body() packageName: nameOfNewPackageDto) {
-    return this.fishService.createPackage(packageName);
+  @Put()
+  updateFish(@Body() fishToUpdate: FishDto) {
+    return this.fishService.updateFish(fishToUpdate)
   }
   @Delete()
   @HttpCode(202)
   deleteFish(@Body() fishId: idOfDeletingItemDto) {
     return this.fishService.deleteFish(fishId)
   }
-  @Put()
-  updateFish(@Body() fishToUpdate: FishDto) {
-    return this.fishService.updateFish(fishToUpdate)
+  @Get('/package')
+  sendAllPackages(): ISendAllFishes {
+    return this.fishService.sendAllPackages();
+  }
+  @Post('/package')
+  createPackage(@Body() packageName: nameOfNewPackageDto) {
+    return this.fishService.createPackage(packageName);
   }
   @Put('/package')
   updatePackage(@Body() packageToModify: ModifyPackageDto) {

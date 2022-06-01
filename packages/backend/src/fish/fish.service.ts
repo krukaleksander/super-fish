@@ -6,13 +6,6 @@ import { mockFishPackage } from '@super-fish/mock-fish-lib';
 
 @Injectable()
 export class FishService {
-  sendAllPackages(): ISendAllFishes {
-    return {
-      status: 200,
-      packages: [mockFishPackage],
-    };
-  }
-
   createFish(fish: FishDto) {
     const { backSide, frontSide, packageID } = fish;
     const newSavedFish: IFish = {
@@ -31,6 +24,25 @@ export class FishService {
     };
   }
 
+  updateFish(fishToUpdate: FishDto) {
+    const isFishInDB = mockFishPackage.shoalOfFish.findIndex(fish => fish.id === fishToUpdate.id) > -1
+    if(isFishInDB) return {message: 'Fish updated'}
+    throw new HttpException('No Content', HttpStatus.NO_CONTENT);
+  }
+
+  deleteFish(fishId: idOfDeletingItemDto) {
+    const isFishInDB = mockFishPackage.shoalOfFish.findIndex(fish => fish.id === fishId.id) > -1
+    if(isFishInDB) return {message: 'Fish deleted'}
+    throw new HttpException('No Content', HttpStatus.NO_CONTENT);
+  }
+
+  sendAllPackages(): ISendAllFishes {
+    return {
+      status: 200,
+      packages: [mockFishPackage],
+    };
+  }
+
   createPackage(packageName: nameOfNewPackageDto) {
     const newPackage: FishPackageDto = {
       id: generateID(),
@@ -42,18 +54,6 @@ export class FishService {
       message: 'Package Created',
       package: newPackage
     }
-  }
-
-  deleteFish(fishId: idOfDeletingItemDto) {
-    const isFishInDB = mockFishPackage.shoalOfFish.findIndex(fish => fish.id === fishId.id) > -1
-    if(isFishInDB) return {message: 'Fish deleted'}
-    throw new HttpException('No Content', HttpStatus.NO_CONTENT);
-  }
-
-  updateFish(fishToUpdate: FishDto) {
-    const isFishInDB = mockFishPackage.shoalOfFish.findIndex(fish => fish.id === fishToUpdate.id) > -1
-    if(isFishInDB) return {message: 'Fish updated'}
-    throw new HttpException('No Content', HttpStatus.NO_CONTENT);
   }
 
   updatePackage(packageToModify: ModifyPackageDto) {
