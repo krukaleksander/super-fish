@@ -6,7 +6,7 @@ import {FishDto, ModifyPackageDto} from '../dto/fish.dto';
 import { mockFishPackage } from '@super-fish/mock-fish-lib';
 describe('Fish', () => {
   let app: INestApplication;
-
+  let putToServer: (endpoint: string, objectToSend) => Promise<any>;
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [FishModule],
@@ -16,6 +16,14 @@ describe('Fish', () => {
     app.useGlobalPipes(new ValidationPipe());
     await app.init();
   });
+
+  beforeAll(function createCustomMethods() {
+    putToServer = async (endpoint, objectToSend) => {
+      return await request(app.getHttpServer())
+        .put(endpoint)
+        .send(objectToSend)
+    }
+  })
 
   afterAll(async () => {
     await app.close();
@@ -156,9 +164,7 @@ describe('Fish', () => {
         newName: "New Package Name"
       }
       it('should change package name if passed id is valid', async () => {
-        const response = await request(app.getHttpServer())
-          .put('/fish/package')
-          .send(packageToRename);
+        const response = await putToServer('/fish/package', packageToRename)
         expect(response.status).toBe(200)
       });
       it('should throw 204 if there is no package with that id', async () => {
@@ -166,9 +172,7 @@ describe('Fish', () => {
           packageID: 'wrong id',
           newName: "New Name"
         }
-        const response = await request(app.getHttpServer())
-          .put('/fish/package')
-          .send(packageWithWrongID)
+        const response = await putToServer('/fish/package', packageWithWrongID)
         expect(response.status).toBe(204)
       });
       it('should throw 400 if new package name is too long', async () => {
@@ -177,9 +181,7 @@ describe('Fish', () => {
           packageID: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"
 
         };
-        const response = await request(app.getHttpServer())
-          .put('/fish/package')
-          .send(packageWithTooLongName);
+        const response = await putToServer('/fish/package', packageWithTooLongName)
         expect(response.status).toBe(400)
       });
 
