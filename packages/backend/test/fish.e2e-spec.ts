@@ -7,6 +7,7 @@ import { mockFishPackage } from '@super-fish/mock-fish-lib';
 describe('Fish', () => {
   let app: INestApplication;
   let putToServer: (endpoint: string, objectToSend) => Promise<any>;
+  let getFromServer: (endpoint: string, objectToSend) => Promise<any>;
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [FishModule],
@@ -21,6 +22,11 @@ describe('Fish', () => {
     putToServer = async (endpoint, objectToSend) => {
       return await request(app.getHttpServer())
         .put(endpoint)
+        .send(objectToSend)
+    }
+    getFromServer = async (endpoint, objectToSend) => {
+      return await request(app.getHttpServer())
+        .get(endpoint)
         .send(objectToSend)
     }
   })
