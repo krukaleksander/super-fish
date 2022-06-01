@@ -24,24 +24,24 @@ describe('Fish', () => {
 
   beforeAll(function createCustomMethods() {
     putToServer = async (endpoint, objectToSend) => {
-      return await request(app.getHttpServer())
+      return request(app.getHttpServer())
         .put(endpoint)
-        .send(objectToSend)
+        .send(objectToSend);
     }
     getFromServer = async (endpoint, objectToSend) => {
-      return await request(app.getHttpServer())
+      return request(app.getHttpServer())
         .get(endpoint)
-        .send(objectToSend)
+        .send(objectToSend);
     }
     postToServer = async (endpoint, objectToSend) => {
-      return await request(app.getHttpServer())
+      return request(app.getHttpServer())
         .post(endpoint)
-        .send(objectToSend)
+        .send(objectToSend);
     }
     deleteFromServer = async (endpoint, objectToSend) => {
-      return await request(app.getHttpServer())
+      return request(app.getHttpServer())
         .delete(endpoint)
-        .send(objectToSend)
+        .send(objectToSend);
     }
   })
 
