@@ -61,9 +61,7 @@ describe('Fish', () => {
           frontSide: 'Cat',
           packageID: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
         };
-        const response = await request(app.getHttpServer())
-          .post('/fish')
-          .send(mockFish);
+       const response = await postToServer(singleFishEndpoint, mockFish)
         expect(response.status).toBe(201);
         expect(response.body).toMatchObject({
           status: 201,
@@ -78,22 +76,21 @@ describe('Fish', () => {
           },
         });
       });
-      it("response status 400 if no fish was send", () => {
-        return request(app.getHttpServer()).post('/fish').expect(400);
+      it("response status 400 if no fish was send", async () => {
+        const response = await postToServer(singleFishEndpoint, {})
+        expect(response.status).toBe(400)
       });
-      it("response status 400 if fish is sent but not valid", () => {
-        return request(app.getHttpServer())
-          .post('/fish')
-          .send({
-            packageID: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
-            frontSide: 20,
-            backSide: 'Something',
-          })
-          .expect({
-            statusCode: 400,
-            message: ['frontSide must be a string'],
-            error: 'Bad Request',
-          });
+      it("response status 400 if fish is sent but not valid", async () => {
+        const response = await postToServer(singleFishEndpoint, {
+          packageID: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
+          frontSide: 20,
+          backSide: 'Something',
+        })
+      expect(response.body).toEqual({
+        statusCode: 400,
+        message: ['frontSide must be a string'],
+        error: 'Bad Request',
+      });
       });
     });
     describe("(PUT) /fish update fish endpoint", () => {
@@ -140,9 +137,7 @@ describe('Fish', () => {
     describe("(POST)/fish/package create package endpoint", () => {
       it("should create package and send back details of it", async () => {
         const packageName = '6 minute english 1.2';
-        const response = await request(app.getHttpServer())
-          .post('/fish/package')
-          .send({ name: packageName });
+        const response = await postToServer(packageEndpoint, {name: packageName})
         expect(response.status).toBe(201);
         expect(response.body).toMatchObject({
           status: 201,
@@ -155,15 +150,11 @@ describe('Fish', () => {
         });
       });
       it("should send 400 if package name is not a string", async () => {
-        const response = await request(app.getHttpServer())
-          .post('/fish/package')
-          .send({ name: [1, null, undefined] });
+        const response = await postToServer(packageEndpoint, { name: [1, null, undefined] })
         expect(response.status).toBe(400);
       });
       it("should send 400 if package name is too long", async () => {
-        const response = await request(app.getHttpServer())
-          .post('/fish/package')
-          .send({ name: "I'am writing too long package name =)" });
+        const response = await postToServer(packageEndpoint, { name: "I'am writing too long package name =)" })
         expect(response.status).toBe(400);
       });
     });
