@@ -36,36 +36,19 @@ describe('Fish', () => {
   });
 
   describe('fish endpoint', () => {
-    describe('/fish (GET) all fishes endpoint', () => {
-      it("'/fish (GET) response status 200'", () => {
-        return request(app.getHttpServer()).get('/fish').expect(200);
+    describe("(GET) /fish all fishes endpoint",  () => {
+      it("response status 200", async () => {
+        const response = await getFromServer('/fish', {})
+        expect(response.status).toBe(200)
+        // return request(app.getHttpServer()).get('/fish').expect(200);
       });
-      it('/fish (GET) should return all packages of fishes', async () => {
-        const { body: response } = await request(app.getHttpServer()).get(
-          '/fish'
-        );
-        expect(response).toMatchSnapshot();
+      it("should return all packages of fishes", async () => {
+        const response = await getFromServer('/fish', {})
+        expect(response.body).toMatchSnapshot();
       });
     });
-    describe("'/fish (POST) create one fish endpoint'", () => {
-      it("'/fish (POST) response status 400 if no fish was send", () => {
-        return request(app.getHttpServer()).post('/fish').expect(400);
-      });
-      it("'/fish (POST) response status 400 if fish is sent but not valid", () => {
-        return request(app.getHttpServer())
-          .post('/fish')
-          .send({
-            packageID: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
-            frontSide: 20,
-            backSide: 'Something',
-          })
-          .expect({
-            statusCode: 400,
-            message: ['frontSide must be a string'],
-            error: 'Bad Request',
-          });
-      });
-      it('/fish (POST) should send back fish details in response', async () => {
+    describe("(POST) /fish create one fish endpoint'", () => {
+      it("should send back fish details in response if fish was created", async () => {
         const mockFish: FishDto = {
           backSide: 'Kot',
           frontSide: 'Cat',
@@ -88,9 +71,67 @@ describe('Fish', () => {
           },
         });
       });
+      it("response status 400 if no fish was send", () => {
+        return request(app.getHttpServer()).post('/fish').expect(400);
+      });
+      it("response status 400 if fish is sent but not valid", () => {
+        return request(app.getHttpServer())
+          .post('/fish')
+          .send({
+            packageID: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
+            frontSide: 20,
+            backSide: 'Something',
+          })
+          .expect({
+            statusCode: 400,
+            message: ['frontSide must be a string'],
+            error: 'Bad Request',
+          });
+      });
     });
-    describe('create package endpoint', () => {
-      it('should create package and send back details of it', async () => {
+    describe("(PUT) /fish update fish endpoint", () => {
+      const { shoalOfFish } = mockFishPackage;
+      const fishToUpdate = shoalOfFish[0];
+      it("should update existing fish", async () => {
+        const modifiedFish = {
+          ...fishToUpdate,
+          remember: true,
+        };
+        const response = await putToServer('/fish', modifiedFish)
+        expect(response.body).toEqual({ message: 'Fish updated' });
+        expect(response.status).toBe(200);
+      });
+      it("should send 204 (No Content) if there is no fish with passed id in db or if user is trying to change fish id", async () => {
+        const modifiedFish = {
+          ...fishToUpdate,
+          id: 'aaaa-xxxx-zzzz-ddddddd'
+        };
+        const response = await putToServer('/fish', modifiedFish)
+        expect(response.status).toBe(204);
+      });
+    });
+    describe("(DELETE) /fish delete fish endpoint", () => {
+      it("should delete fish if passed id is valid and can be found in db", async () => {
+        const response = await request(app.getHttpServer())
+          .delete('/fish')
+          .send({ id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed' });
+        expect(response.status).toBe(202);
+      });
+      it("should send 400 if id is not valid", async () => {
+        const response = await request(app.getHttpServer())
+          .delete('/fish')
+          .send({ id: true });
+        expect(response.status).toBe(400);
+      });
+      it("should send 204 (No Content) if there is no fish with passed id in db", async () => {
+        const response = await request(app.getHttpServer())
+          .delete('/fish')
+          .send({ id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bba' });
+        expect(response.status).toBe(204);
+      });
+    });
+    describe("(POST)/fish/package create package endpoint", () => {
+      it("should create package and send back details of it", async () => {
         const packageName = '6 minute english 1.2';
         const response = await request(app.getHttpServer())
           .post('/fish/package')
@@ -106,70 +147,29 @@ describe('Fish', () => {
           },
         });
       });
-      it('should send 400 if package name is not a string', async () => {
+      it("should send 400 if package name is not a string", async () => {
         const response = await request(app.getHttpServer())
           .post('/fish/package')
           .send({ name: [1, null, undefined] });
         expect(response.status).toBe(400);
       });
-      it('should send 400 if package name is too long', async () => {
+      it("should send 400 if package name is too long", async () => {
         const response = await request(app.getHttpServer())
           .post('/fish/package')
           .send({ name: "I'am writing too long package name =)" });
         expect(response.status).toBe(400);
       });
     });
-    describe('delete fish endpoint', () => {
-      it('should delete fish if passed id is valid and can be found in db', async () => {
-        const response = await request(app.getHttpServer())
-          .delete('/fish')
-          .send({ id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed' });
-        expect(response.status).toBe(202);
-      });
-      it('should send 400 if id is not valid', async () => {
-        const response = await request(app.getHttpServer())
-          .delete('/fish')
-          .send({ id: true });
-        expect(response.status).toBe(400);
-      });
-      it('should send 204 (No Content) if there is no fish with passed id in db', async () => {
-        const response = await request(app.getHttpServer())
-          .delete('/fish')
-          .send({ id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bba' });
-        expect(response.status).toBe(204);
-      });
-    });
-    describe('(PUT) / fish update fish endpoint', () => {
-      const { shoalOfFish } = mockFishPackage;
-      const fishToUpdate = shoalOfFish[0];
-      it('should update existing fish', async () => {
-        const modifiedFish = {
-          ...fishToUpdate,
-          remember: true,
-        };
-        const response = await putToServer('/fish', modifiedFish)
-        expect(response.body).toEqual({ message: 'Fish updated' });
-        expect(response.status).toBe(200);
-      });
-      it('should send 204 (No Content) if there is no fish with passed id in db or if user is trying to change fish id', async () => {
-        const modifiedFish = {
-          ...fishToUpdate,
-          id: 'aaaa-xxxx-zzzz-ddddddd'
-        };
-        const response = await putToServer('/fish', modifiedFish)
-        expect(response.status).toBe(204);
-      });
-    });
-    describe('(PUT) /fish/package update fish package', () => {
+    describe("(PUT) /fish/package update fish package", () => {
       const packageToRename: ModifyPackageDto = {
         packageID: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
         newName: "New Package Name"
       }
-      it('should change package name if passed id is valid', async () => {
+      it("should change package name if passed id is valid", async () => {
         const response = await putToServer('/fish/package', packageToRename)
         expect(response.status).toBe(200)
       });
-      it('should throw 204 if there is no package with that id', async () => {
+      it("should throw 204 if there is no package with that id", async () => {
         const packageWithWrongID:ModifyPackageDto = {
           packageID: 'wrong id',
           newName: "New Name"
@@ -177,7 +177,7 @@ describe('Fish', () => {
         const response = await putToServer('/fish/package', packageWithWrongID)
         expect(response.status).toBe(204)
       });
-      it('should throw 400 if new package name is too long', async () => {
+      it("should throw 400 if new package name is too long", async () => {
         const packageWithTooLongName: ModifyPackageDto = {
           newName: "I'm sure that this name for a package is too long",
           packageID: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"
