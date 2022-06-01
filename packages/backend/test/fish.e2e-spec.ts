@@ -9,6 +9,7 @@ describe('Fish', () => {
   let putToServer: (endpoint: string, objectToSend) => Promise<any>;
   let getFromServer: (endpoint: string, objectToSend) => Promise<any>;
   let postToServer: (endpoint: string, objectToSend) => Promise<any>;
+  let deleteFromServer: (endpoint: string, objectToSend) => Promise<any>;
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [FishModule],
@@ -33,6 +34,11 @@ describe('Fish', () => {
     postToServer = async (endpoint, objectToSend) => {
       return await request(app.getHttpServer())
         .post(endpoint)
+        .send(objectToSend)
+    }
+    deleteFromServer = async (endpoint, objectToSend) => {
+      return await request(app.getHttpServer())
+        .delete(endpoint)
         .send(objectToSend)
     }
   })
