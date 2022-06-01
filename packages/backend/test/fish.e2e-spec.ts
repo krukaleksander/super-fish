@@ -2,7 +2,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { FishModule } from '../src/fish/fish.module';
 import * as request from 'supertest';
-import { FishDto } from '../dto/fish.dto';
+import {FishDto, ModifyPackageDto} from '../dto/fish.dto';
 import { mockFishPackage } from '@super-fish/mock-fish-lib';
 describe('Fish', () => {
   let app: INestApplication;
@@ -150,5 +150,17 @@ describe('Fish', () => {
         expect(response.status).toBe(204);
       });
     });
+    describe('(PUT) /fish/package update fish package', () => {
+      it('should change package name if passed id is valid', async () => {
+        const packageToRename: ModifyPackageDto = {
+          packageID: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+          newName: "New Package Name"
+        }
+        const response = await request(app.getHttpServer())
+          .put('/fish/package')
+          .send(packageToRename);
+        expect(response.status).toBe(200)
+      });
+    })
   });
 });

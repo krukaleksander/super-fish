@@ -1,5 +1,5 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
-import {FishDto, FishPackageDto, idOfDeletingItemDto, nameOfNewPackageDto} from '../../dto/fish.dto';
+import {FishDto, FishPackageDto, idOfDeletingItemDto, ModifyPackageDto, nameOfNewPackageDto} from '../../dto/fish.dto';
 import { IFish, ISendAllFishes } from '../interfaces';
 import { v4 as generateID } from 'uuid';
 import { mockFishPackage } from '@super-fish/mock-fish-lib';
@@ -54,5 +54,15 @@ export class FishService {
     const isFishInDB = mockFishPackage.shoalOfFish.findIndex(fish => fish.id === fishToUpdate.id) > -1
     if(isFishInDB) return {message: 'Fish updated'}
     throw new HttpException('No Content', HttpStatus.NO_CONTENT);
+  }
+
+  updatePackage(packageToModify: ModifyPackageDto) {
+    const db = [mockFishPackage]
+    const indexOfPackage = db.findIndex(fishPackage => fishPackage.id === packageToModify.packageID);
+    if(indexOfPackage > -1) {
+      db[indexOfPackage].name = packageToModify.newName;
+      return {message: 'Package updated'}
+    }
+    throw new HttpException('No Content', HttpStatus.NO_CONTENT)
   }
 }
