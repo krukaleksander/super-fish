@@ -4,12 +4,14 @@ import { FishModule } from '../src/fish/fish.module';
 import * as request from 'supertest';
 import {FishDto, ModifyPackageDto} from '../dto/fish.dto';
 import { mockFishPackage } from '@super-fish/mock-fish-lib';
+import * as superagent from 'superagent';
+
 describe('Fish', () => {
   let app: INestApplication;
-  let putToServer: (endpoint: string, objectToSend) => Promise<any>;
-  let getFromServer: (endpoint: string, objectToSend) => Promise<any>;
-  let postToServer: (endpoint: string, objectToSend) => Promise<any>;
-  let deleteFromServer: (endpoint: string, objectToSend) => Promise<any>;
+  let putToServer: (endpoint: string, objectToSend) => Promise<superagent.Response>;
+  let getFromServer: (endpoint: string, objectToSend) => Promise<superagent.Response>;
+  let postToServer: (endpoint: string, objectToSend) => Promise<superagent.Response>;
+  let deleteFromServer: (endpoint: string, objectToSend) => Promise<superagent.Response>;
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [FishModule],
