@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Fish fish endpoint (GET) /fish all fishes endpoint should return all packages of fishes 1`] = `
+exports[`Fish fish endpoint (GET) /fish/package all fishes endpoint should return all packages of fishes 1`] = `
 Object {
   "packages": Array [
     Object {

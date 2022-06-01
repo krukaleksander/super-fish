@@ -6,7 +6,7 @@ import { mockFishPackage } from '@super-fish/mock-fish-lib';
 
 @Injectable()
 export class FishService {
-  findAll(): ISendAllFishes {
+  sendAllPackages(): ISendAllFishes {
     return {
       status: 200,
       packages: [mockFishPackage],

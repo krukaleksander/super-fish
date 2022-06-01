@@ -50,16 +50,6 @@ describe('Fish', () => {
   describe('fish endpoint', () => {
     const singleFishEndpoint = '/fish';
     const packageEndpoint = '/fish/package';
-    describe("(GET) /fish all fishes endpoint",  () => {
-      it("response status 200", async () => {
-        const response = await getFromServer(singleFishEndpoint, {})
-        expect(response.status).toBe(200)
-      });
-      it("should return all packages of fishes", async () => {
-        const response = await getFromServer(singleFishEndpoint, {})
-        expect(response.body).toMatchSnapshot();
-      });
-    });
     describe("(POST) /fish create one fish endpoint'", () => {
       it("should send back fish details in response if fish was created", async () => {
         const mockFish: FishDto = {
@@ -132,6 +122,16 @@ describe('Fish', () => {
       it("should send 204 (No Content) if there is no fish with passed id in db", async () => {
         const response = await deleteFromServer(singleFishEndpoint, { id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bba' })
         expect(response.status).toBe(204);
+      });
+    });
+    describe("(GET) /fish/package all fishes endpoint",  () => {
+      it("response status 200", async () => {
+        const response = await getFromServer(packageEndpoint, {})
+        expect(response.status).toBe(200)
+      });
+      it("should return all packages of fishes", async () => {
+        const response = await getFromServer(packageEndpoint, {})
+        expect(response.body).toMatchSnapshot();
       });
     });
     describe("(POST)/fish/package create package endpoint", () => {

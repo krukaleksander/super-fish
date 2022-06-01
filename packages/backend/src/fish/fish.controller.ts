@@ -7,9 +7,9 @@ import {ISendAllFishes} from "../interfaces";
 export class FishController {
   constructor(private readonly fishService: FishService) {
   }
-  @Get()
-  findAll(): ISendAllFishes {
-    return this.fishService.findAll();
+  @Get('/package')
+  sendAllPackages(): ISendAllFishes {
+    return this.fishService.sendAllPackages();
   }
   @Post()
   createFish(@Body() fish: FishDto) {
