@@ -51,3 +51,12 @@ export class idOfDeletingItemDto {
   @IsString()
   id: string;
 }
+export class ModifyPackageDto {
+  @IsNotEmpty()
+  @IsString()
+  packageID: string;
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(20, {message: 'Package name is too long'})
+  newName: string;
+}
