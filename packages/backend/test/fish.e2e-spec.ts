@@ -211,6 +211,11 @@ describe('Fish', () => {
         const response = await deleteFromServer(packageEndpoint, {id: packageID})
         expect(response.status).toBe(202);
       });
+      it("should return message package deleted", async () => {
+        const packageID = '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d';
+        const response = await deleteFromServer(packageEndpoint, {id: packageID})
+        expect(response.body).toEqual({message: 'Package deleted'});
+      });
     })
   });
 });

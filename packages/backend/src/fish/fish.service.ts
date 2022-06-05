@@ -74,7 +74,7 @@ export class FishService {
 
   deleteFishPackage(packageIdObj: IdOfFishOrPackageDto) {
     const isIdValid = mockFishPackage.id === packageIdObj.id;
-    if(isIdValid) return {message: 'Fish deleted'}
+    if(isIdValid) return {message: 'Package deleted'}
     throw new HttpException('No Content', HttpStatus.NO_CONTENT);
   }
 }
