@@ -205,5 +205,12 @@ describe('Fish', () => {
       });
 
     })
+    describe('(DELETE) /fish/package delete fish package', () => {
+      it("should return status 202 if id is valid", async () => {
+        const packageID = '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d';
+        const response = await deleteFromServer(packageEndpoint, {id: packageID})
+        expect(response.status).toBe(202);
+      });
+    })
   });
 });

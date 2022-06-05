@@ -48,4 +48,9 @@ export class FishController {
   updatePackage(@Body() packageToModify: ModifyPackageDto) {
     return this.fishService.updatePackage(packageToModify);
   }
+  @Delete('/package')
+  @HttpCode(202)
+  deleteFishPackage(@Body() packageIdObj: IdOfFishOrPackageDto) {
+    return this.fishService.deleteFishPackage(packageIdObj);
+  }
 }

@@ -71,4 +71,10 @@ export class FishService {
     }
     throw new HttpException('No Content', HttpStatus.NO_CONTENT)
   }
+
+  deleteFishPackage(packageIdObj: IdOfFishOrPackageDto) {
+    const isIdValid = mockFishPackage.id === packageIdObj.id;
+    if(isIdValid) return {message: 'Fish deleted'}
+    throw new HttpException('No Content', HttpStatus.NO_CONTENT);
+  }
 }
