@@ -216,6 +216,11 @@ describe('Fish', () => {
         const response = await deleteFromServer(packageEndpoint, {id: packageID})
         expect(response.body).toEqual({message: 'Package deleted'});
       });
+      it("should return status 204 if there is no package with given id", async () => {
+        const packageID = 'fake id';
+        const response = await deleteFromServer(packageEndpoint, {id: packageID})
+        expect(response.status).toBe(204);
+      });
     })
   });
 });
