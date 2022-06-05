@@ -46,7 +46,7 @@ export class nameOfNewPackageDto {
   name: string;
 }
 
-export class idOfDeletingItemDto {
+export class IdOfFishOrPackageDto {
   @IsNotEmpty()
   @IsString()
   id: string;

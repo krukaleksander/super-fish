@@ -1,11 +1,17 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
-import {FishDto, FishPackageDto, idOfDeletingItemDto, ModifyPackageDto, nameOfNewPackageDto} from '../../dto/fish.dto';
+import {FishDto, FishPackageDto, IdOfFishOrPackageDto, ModifyPackageDto, nameOfNewPackageDto} from '../../dto/fish.dto';
 import { IFish, ISendAllFishes } from '../interfaces';
 import { v4 as generateID } from 'uuid';
 import { mockFishPackage } from '@super-fish/mock-fish-lib';
 
 @Injectable()
 export class FishService {
+  getOneFish(fishIdObject: IdOfFishOrPackageDto) {
+    const isFishInDB = mockFishPackage.shoalOfFish.findIndex(fish => fish.id === fishIdObject.id) > -1;
+    if(isFishInDB) return mockFishPackage.shoalOfFish.find((fish) => fish.id === fishIdObject.id)
+    throw new HttpException('No Content', HttpStatus.NO_CONTENT);
+  }
+
   createFish(fish: FishDto) {
     const { backSide, frontSide, packageID } = fish;
     const newSavedFish: IFish = {
@@ -30,7 +36,7 @@ export class FishService {
     throw new HttpException('No Content', HttpStatus.NO_CONTENT);
   }
 
-  deleteFish(fishId: idOfDeletingItemDto) {
+  deleteFish(fishId: IdOfFishOrPackageDto) {
     const isFishInDB = mockFishPackage.shoalOfFish.findIndex(fish => fish.id === fishId.id) > -1
     if(isFishInDB) return {message: 'Fish deleted'}
     throw new HttpException('No Content', HttpStatus.NO_CONTENT);

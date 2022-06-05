@@ -52,6 +52,13 @@ describe('Fish', () => {
   describe('fish endpoint', () => {
     const singleFishEndpoint = '/fish';
     const packageEndpoint = '/fish/package';
+    describe("(GET) /fish get single fish endpoint", () => {
+      it("should return status 200 if fish is in DB", async () => {
+        const fishID = '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed';
+        const response = await getFromServer(singleFishEndpoint, {id: fishID})
+        expect(response.status).toBe(200)
+      });
+    })
     describe("(POST) /fish create one fish endpoint'", () => {
       it("should send back fish details in response if fish was created", async () => {
         const mockFish: FishDto = {
