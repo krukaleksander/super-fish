@@ -63,6 +63,11 @@ describe('Fish', () => {
         const response = await getFromServer(singleFishEndpoint, {id: fishID})
         expect(response.body).toEqual(mockFishPackage.shoalOfFish.find(fish => fish.id === fishID))
       });
+      it("should return status 204 if with given id is not in db", async () => {
+        const fishID = 'some id';
+        const response = await getFromServer(singleFishEndpoint, {id: fishID})
+        expect(response.status).toBe(204)
+      });
     })
     describe("(POST) /fish create one fish endpoint'", () => {
       it("should send back fish details in response if fish was created", async () => {
