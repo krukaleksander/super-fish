@@ -52,20 +52,20 @@ describe('Fish', () => {
   describe('fish endpoint', () => {
     const singleFishEndpoint = '/fish';
     const packageEndpoint = '/fish/package';
+    const fishID = '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed';
+    const fakeID = 'fake id';
+    const packageID = '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d';
     describe("(GET) /fish get single fish endpoint", () => {
       it("should return status 200 if fish is in DB", async () => {
-        const fishID = '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed';
         const response = await getFromServer(singleFishEndpoint, {id: fishID})
         expect(response.status).toBe(200)
       });
       it("should return fish with given id", async () => {
-        const fishID = '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed';
         const response = await getFromServer(singleFishEndpoint, {id: fishID})
         expect(response.body).toEqual(mockFishPackage.shoalOfFish.find(fish => fish.id === fishID))
       });
       it("should return status 204 if with given id is not in db", async () => {
-        const fishID = 'some id';
-        const response = await getFromServer(singleFishEndpoint, {id: fishID})
+        const response = await getFromServer(singleFishEndpoint, {id: fakeID})
         expect(response.status).toBe(204)
       });
     })
@@ -74,7 +74,7 @@ describe('Fish', () => {
         const mockFish: FishDto = {
           backSide: 'Kot',
           frontSide: 'Cat',
-          packageID: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
+          packageID: fishID,
         };
        const response = await postToServer(singleFishEndpoint, mockFish)
         expect(response.status).toBe(201);
@@ -123,7 +123,7 @@ describe('Fish', () => {
       it("should send 204 (No Content) if there is no fish with passed id in db or if user is trying to change fish id", async () => {
         const modifiedFish = {
           ...fishToUpdate,
-          id: 'aaaa-xxxx-zzzz-ddddddd'
+          id: fakeID
         };
         const response = await putToServer('/fish', modifiedFish)
         expect(response.status).toBe(204);
@@ -131,15 +131,15 @@ describe('Fish', () => {
     });
     describe("(DELETE) /fish delete fish endpoint", () => {
       it("should delete fish if passed id is valid and can be found in db", async () => {
-        const response = await deleteFromServer(singleFishEndpoint, { id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed' })
+        const response = await deleteFromServer(singleFishEndpoint, { id: fishID })
         expect(response.status).toBe(202);
       });
       it("should send 400 if id is not valid", async () => {
-        const response = await deleteFromServer(singleFishEndpoint, { id: true })
+        const response = await deleteFromServer(singleFishEndpoint, { id: null })
         expect(response.status).toBe(400);
       });
       it("should send 204 (No Content) if there is no fish with passed id in db", async () => {
-        const response = await deleteFromServer(singleFishEndpoint, { id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bba' })
+        const response = await deleteFromServer(singleFishEndpoint, { id: fakeID })
         expect(response.status).toBe(204);
       });
     });
@@ -188,7 +188,7 @@ describe('Fish', () => {
       });
       it("should throw 204 if there is no package with that id", async () => {
         const packageWithWrongID:ModifyPackageDto = {
-          packageID: 'wrong id',
+          packageID: fakeID,
           newName: "New Name"
         }
         const response = await putToServer(packageEndpoint, packageWithWrongID)
@@ -207,18 +207,15 @@ describe('Fish', () => {
     })
     describe('(DELETE) /fish/package delete fish package', () => {
       it("should return status 202 if id is valid", async () => {
-        const packageID = '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d';
         const response = await deleteFromServer(packageEndpoint, {id: packageID})
         expect(response.status).toBe(202);
       });
       it("should return message package deleted", async () => {
-        const packageID = '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d';
         const response = await deleteFromServer(packageEndpoint, {id: packageID})
         expect(response.body).toEqual({message: 'Package deleted'});
       });
       it("should return status 204 if there is no package with given id", async () => {
-        const packageID = 'fake id';
-        const response = await deleteFromServer(packageEndpoint, {id: packageID})
+        const response = await deleteFromServer(packageEndpoint, {id: fakeID})
         expect(response.status).toBe(204);
       });
     })
