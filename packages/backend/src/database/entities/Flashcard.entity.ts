@@ -19,7 +19,7 @@ export class FlashCard implements IFish{
   refreshedAt: string;
   @Column()
   remember: boolean;
-  @ManyToOne(() => FishPackage, (fishpackage) => fishpackage.cards)
+  @ManyToOne(() => FishPackage, (fishpackage) => fishpackage.shoalOfFish)
   @JoinColumn({referencedColumnName: 'id', name: 'packageId'})
   package: FishPackage
 }
